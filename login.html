@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+*:focus {
+	outline: none;
+}
+body {
+font-family: Arial;
+background-color: #3498DB;
+padding: 50px;
+}
+.login {
+margin: 20px auto;
+width: 300px;
+}
+.login-screen {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+
+.app-title {
+text-align: center;
+color: #777;
+}
+
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+input {
+text-align: center;
+background-color: #ECF0F1;
+border: 2px solid transparent;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
+input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+</style>    
+    
+    
+  </head>
+
+  <body>
+
+    <body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+
+			<div class="login-form">
+				<form action='http://194.29.146.156:9090/pijaginw/safeyourself/login' method='POST'>
+					<div class="control-group">
+					<input type="text" class="login-field" value="" placeholder="username" id="login-name">
+					<label class="login-field-icon fui-user" for="login-name"></label>
+					</div>
+
+					<div class="control-group">
+					<input type="password" class="login-field" value="" placeholder="password" id="login-pass">
+					<label class="login-field-icon fui-lock" for="login-pass"></label>
+					</div>
+
+					<input type='submit' value='LOGIN' />
+					<a class="login-link" href="#">Lost your password?</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+    
+    
+    
+    
+    
+  </body>
+</html>
