@@ -1,11 +1,7 @@
 from sqlite3 import *
+
 db = connect('dbase.db')
 cur = db.cursor()
-
-table_name = 'dbase'
-first_col = 'login'
-second_col = 'password'
-typ = 'TEXT'
 
 
 db.execute('CREATE TABLE dbase (login TEXT, password TEXT)')
