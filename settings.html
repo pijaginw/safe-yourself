@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Change password</title>
+
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	*:focus {
+		outline: none;
+	}
+	body {
+		font-family: Arial;
+		background-color: #D1B6E1;
+		padding: 50px;
+	}
+	.login {
+		margin: 20px auto;
+		width: 300px;
+	}
+	.login-screen {
+		background-color: #FFF;
+		padding: 20px;
+		border-radius: 5px;
+	}
+	.app-title {
+		text-align: center;
+		color: #777;
+	}
+	.login-form {
+		text-align: center;
+	}
+	.control-group {
+		margin-bottom: 10px;
+	}
+	input {
+		text-align: center;
+		background-color: #ECF0F1;
+		border: 2px solid transparent;
+		border-radius: 3px;
+		font-size: 16px;
+		font-weight: 200;
+		padding: 10px 0;
+		width: 250px;
+		transition: border .5s;
+	}
+	input:focus {
+		border: 2px solid #3498DB;
+		box-shadow: none;
+	}
+	</style>
+
+    <script type="text/javascript">
+
+    </script>
+    
+  </head>
+
+  <body>
+
+    <body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Change password:</h1>
+			</div>
+
+			<div class="login-form">
+				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/settings' method='POST'>
+					<p>change your password, {{ username }}</p>
+
+					<div class="control-group">
+					<label class="login-field-icon fui-user" for="oldPass">old password:</label>
+					<input type="password" class="login-field" value="" placeholder="old" id="oldPass" name="oldPass">
+					</div>
+
+					<div class="control-group">
+					<label class="login-field-icon fui-lock" for="login-pass">new password:</label>
+					<input type="password" class="login-field" value="" placeholder="new" id="newPass" name="newPass">
+					</div>
+
+					<div class="control-group">
+					<label class="login-field-icon fui-lock" for="newPass2">repeat:</label>
+					<input type="password" class="login-field" value="" placeholder="new" id="newPass2" name="newPass2">
+					</div>
+
+					<input type='submit' value='CHANGE' />
+				</form>
+				<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+			</div>
+		</div>
+	</div>
+</body>
+    
+    
+    
+    
+    
+  </body>
+</html>

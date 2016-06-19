@@ -6,7 +6,7 @@ cur = db.cursor()
 
 db.execute('CREATE TABLE dbase (login TEXT, password TEXT)')
 
-db.execute("INSERT INTO dbase (login, password) VALUES ('aa153454', 'test')")
+db.execute("INSERT INTO dbase (login, password) VALUES ('nanan1', 'pass')")
 db.execute("INSERT INTO dbase (login, password) VALUES ('120056', 'top secret')")
 
 db.commit()

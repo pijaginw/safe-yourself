@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Sign Up Form</title>
+    
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+*:focus {
+	outline: none;
+}
+body {
+font-family: Arial;
+background-color: #3498DB;
+padding: 50px;
+}
+.signup {
+margin: 20px auto;
+width: 300px;
+}
+.signup-screen {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+
+.app-title {
+text-align: center;
+color: #777;
+}
+
+.signup-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+input {
+text-align: center;
+background-color: #ECF0F1;
+border: 2px solid transparent;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
+input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+</style>    
+    
+    
+  </head>
+
+  <body>
+
+    <body>
+	<div class="signup">
+		<div class="signup-screen">
+			<div class="app-title">
+				<h1>Sign up</h1>
+			</div>
+
+			<div class="signup-form">
+				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/signup' method='POST'>
+					<div class="control-group">
+						<label class="signup-field-icon fui-user" for="signup-name">login:</label>
+						<input type="text" class="signup-field" value="" placeholder="login" id="login-name" name="inputLogin">
+
+						<label class="signup-field-icon fui-user" for="signup-name">password:</label>
+						<input type="password" class="signup-field" value="" placeholder="password" id="pass-name" name="inputPass">
+
+						<label class="signup-field-icon fui-user" for="signup-name">repeat:</label>
+						<input type="password" class="signup-field" value="" placeholder="repeat" id="pass2-name" name="inputPass2">
+					
+					</div>
+
+
+
+					<input type='submit' value='Create your account' />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+    
+    
+    
+    
+    
+  </body>
+</html>
