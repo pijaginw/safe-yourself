@@ -61,16 +61,16 @@
 				<h1>Notes</h1>
 			</div>
 
-			<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+			<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
 			<div class="notes">
-				<form action='https://194.29.146.156:6678/pijaginw/safeyourself/notes' method='POST'>
+				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/notes' method='POST'>
 					<p>Add a note:</p>
 					<div class="noteArea">
 						<textarea class="note" value="" id="noteTextarea" name="noteTextarea"></textarea>
 					</div>
 					<input type='submit' value='Add' />
 
-					<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/logout">LOGOUT</a></p>
+					<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">LOGOUT</a></p>
 					{% if notes %}
 						<ul>
 							{% for user in notes %}

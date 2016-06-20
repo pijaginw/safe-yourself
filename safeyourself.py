@@ -5,12 +5,14 @@ import cgi
 from passlib.hash import pbkdf2_sha256
 import math
 import json
+import uuid
 
 dbFile = '/home/pijaginw/safeyourself/safe-yourself/dbase.db'
 
-notes = {}
+#notes = {}
 session = {}
-
+counter = 0
+cookie = 0
 
 def index(headers, body, data):
   return 'Hello', 200, {}
@@ -33,8 +35,9 @@ def login(headers, body, data):
       session['ip'] = headers['remote-addr']
       print session
 
-      if login not in notes:
-        notes[login] = []
+      #if login not in notes:
+      #  notes[login] = []
+      notes = getNotesFromDatabase(dbFile)
       return render_template('notes.html', body=body, data=data, notes=notes), 200, {}
 
     elif isPasswordCorrect(login, password, dbFile) is False:
@@ -44,11 +47,11 @@ def addToDatabase(login, password, dbfile):
   conn = sqlite3.connect(dbfile)
   c = conn.cursor()
 
-  c.execute('INSERT INTO dbase VALUES (?, ?)', (login, hashPassword(password)))
+  c.execute('INSERT INTO dbase (login, password) VALUES (?, ?)', (login, hashPassword(password)))
   conn.commit()
   conn.close()
-  notes[login] = []
-  print notes
+  #notes[login] = []
+  #print notes
 
 def isUserInDatabase(login, dbfile):
   conn = sqlite3.connect(dbfile)
@@ -100,31 +103,58 @@ def hashPassword(password):
 
 def postNote(headers, body, data):
   request_method = headers['request-method']
+
   if request_method == 'GET':
+    notes = getNotesFromDatabase(dbFile)
     return render_template('notes.html', body=body, data=data, 
                             notes=notes, username=session['user']), 200, {}
 
   elif (request_method == 'POST' and ('user' in session)):
     note = cgi.escape(str(data['noteTextarea']), quote=True)
-    #addNoteToDatabase(note, login, dbFile)
-    addNote(session['user'], str(note))
+    addNoteToDatabase(str(note), session['user'], dbFile)
+    #addNote(session['user'], str(note))
+
+    #global notes
+    notes = getNotesFromDatabase(dbFile)
     print notes
     return render_template('notes.html', body=body, data=data, 
                             notes=notes, username=session['user']), 200, {}
     
-def addNote(login, note):
-  if login not in notes:
-    return 'wrong user !!', 200, {}
-  else:
-    notes[login].append(note)
+# def addNote(login, note):
+#   if login not in notes:
+#     return 'wrong user !!', 200, {}
+#   else:
+#     notes[login].append(note)
 
-"""def addNoteToDatabase(note, login, dbfile):
+def addNoteToDatabase(note, login, dbfile):
   conn = sqlite3.connect(dbfile)
   c = conn.cursor()
 
-  c.execute('INSERT INTO dbase (note) WHERE login=? VALUES (?)', (login, str(note)))
+  c.execute('SELECT counter FROM dbase WHERE login=?', (str(login), ))
   conn.commit()
-  conn.close()"""
+  res = c.fetchall()
+
+  if len(res) == 1:
+    res = res[0][0]
+    print res
+
+  new_column = 'note'
+  global counter
+  if res == counter:
+    counter += 1
+    new_column += str(counter)
+
+    c.execute("ALTER TABLE dbase ADD COLUMN '{cn}' TEXT".format(cn=new_column))
+  else:
+    new_column += str(res+1)
+
+  print new_column
+
+  c.execute("UPDATE dbase SET '{cn}'='{note}' WHERE login='{lg}'".format(cn=new_column, note=str(note), lg=login))
+  c.execute("UPDATE dbase SET '{cn}'='{c}' WHERE login='{lg}'".format(cn='counter', c=res+1, lg=login))
+
+  conn.commit()
+  conn.close()
 
 def changePass(headers, body, data):
   request_method = headers['request-method']
@@ -134,8 +164,8 @@ def changePass(headers, body, data):
 
   elif request_method == 'POST':
     oldpass = cgi.escape(str(data['oldPass']), quote=True)
-    newpass = cgi.escape(str(data['newPass']), quote=True)
-    newpass2 = cgi.escape(str(data['newPass2']), quote=True)
+    #newpass = cgi.escape(str(data['newPass']), quote=True)
+    #newpass2 = cgi.escape(str(data['newPass2']), quote=True)
 
     if isPasswordCorrect(session['user'], oldpass, dbFile):
       newpass = cgi.escape(str(data['newPass']), quote=True)
@@ -166,14 +196,33 @@ def validation(headers, body, data):
   request_method = headers['request-method']
   if request_method == 'POST':
     password = cgi.escape((body), quote=True)
-    print '++++++++++++++++++'
-    print type(password)
-    print password
-    print '++++++++++++++++++\n'
     response = {'entropy': entropy(str(password))}
   return json.dumps(response), 200, {'content-type': 'application/json'}
 
 
+def getNotesFromDatabase(dbfile):
+  conn = sqlite3.connect(dbfile)
+  c = conn.cursor()
+  c.execute('SELECT * FROM dbase')
+  allData = c.fetchall()
+
+  notes = {}
+  for user in allData:
+
+    c.execute('SELECT counter FROM dbase WHERE login=?', (str(user[0]), ))
+    res = c.fetchall()[0][0]
+    notes[user[0]] = []
+
+    if res == 0:
+      continue
+    for i in range(res):
+      notes[user[0]].append(user[3+i])
+
+  print notes
+  conn.commit()
+  conn.close()
+
+  return notes
 
 
 def entropy(password):
