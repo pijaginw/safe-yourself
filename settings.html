@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Change password</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 	<style>
 	* {
@@ -36,6 +37,10 @@
 	.control-group {
 		margin-bottom: 10px;
 	}
+	.hint {
+		color: #f15c5c;
+		font: bold .8em Verdana, sans-serif;
+	}
 	input {
 		text-align: center;
 		background-color: #ECF0F1;
@@ -52,7 +57,41 @@
 		box-shadow: none;
 	}
 	</style>
-    
+    <script type="text/javascript">
+    	var result = 0;
+    	var request;
+
+	    window.addEventListener("load", function(){
+
+			function checkPass() {
+				var pass = $('#newPass').val();
+				request = $.ajax({
+					url: 'http://194.29.146.156:9097/pijaginw/safeyourself/signup/validation',
+					mimeType: 'application/json; charset=UTF-8',
+					type: 'POST',
+					data: pass,
+					success: function(responseText, statusText, jqXHR) {
+
+						result = responseText['entropy'];
+						if (result > 2.2) {
+							$('#hint').text( '' );
+							$('#submitButton').attr("disabled", false);
+						} else {
+							$('#hint').text( 'password is too weak!' );
+							$('#submitButton').attr("disabled", true);
+						}
+					},
+					error: function(jqXHR, statusText, errorThrown) {
+						//alert(jqXHR.responseText);
+					}
+				});
+			}
+
+			elPassword = document.getElementById('newPass');
+			elPassword.addEventListener('input', checkPass, false);
+
+		}, false);
+    </script>
   </head>
 
   <body>
@@ -75,6 +114,7 @@
 
 					<div class="control-group">
 					<label class="login-field-icon fui-lock" for="login-pass">new password:</label>
+					<p id="hint" class="hint"></p>
 					<input type="password" class="login-field" value="" placeholder="new" id="newPass" name="newPass">
 					</div>
 
@@ -83,7 +123,7 @@
 					<input type="password" class="login-field" value="" placeholder="new" id="newPass2" name="newPass2">
 					</div>
 
-					<input type='submit' value='CHANGE' />
+					<input type='submit' value='CHANGE' id='submitButton'/>
 				</form>
 				<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
 			</div>
