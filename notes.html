@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Notes</title> 
+    
+  </head>
+
+  <style type="text/css">
+  	body {
+		font-family: Arial;
+		background-color: #fff1b9;
+		padding: 50px;
+	}
+  	.note {
+  		width: 400px;
+		height: 100px;
+		border: 3px solid #cccccc;
+		margin: 20px;
+		font-family: Tahoma, sans-serif;
+  	}
+  	.noteArea {
+  		width: 450px;
+  		height: 150px;
+  		background-color: #a79c8e;
+		margin: 20px auto;
+		border-radius: 25px;
+  	}
+  	.notes {
+		margin: 20px auto;
+		width: 500px;
+	}
+	.title {
+		text-align: center;
+		color: #8F2D56;
+	}
+	.userName {
+		font-weight: bold;
+	}
+	.oldnote {
+		background-color: #ff7761;
+		padding: 10px;
+		width: 430px;
+		height: 80px;
+		border-radius: 15px;
+		margin: 20px auto;
+	}
+	ul li {
+		list-style: none;
+		list-style-position: inside;
+		margin: 20px auto;
+	}
+  </style>
+
+  <body>
+
+    <body>
+	<div>
+		<div>
+			<div class="title">
+				<h1>Notes</h1>
+			</div>
+
+			<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+			<div class="notes">
+				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/notes' method='POST'>
+					<p>Add a note:</p>
+					<div class="noteArea">
+						<textarea class="note" value="" id="noteTextarea" name="noteTextarea"></textarea>
+					</div>
+					<input type='submit' value='Add' />
+
+					<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">LOGOUT</a></p>
+					{% if notes %}
+						<ul>
+							{% for user in notes %}
+								{% for note in notes[user] %}
+									<div class="oldnote">
+										<li><p class="userName">{{ user }} writes...</p>{{ note }}</li>
+									</div>
+								{% endfor %}
+							{% endfor %}
+						</ul>
+					{% else %}
+						<em>no notes has been added yet :(</em>
+					{% endif %}
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+    
+    
+    
+    
+    
+  </body>
+</html>

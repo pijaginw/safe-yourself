@@ -3,61 +3,96 @@
   <head>
     <meta charset="UTF-8">
     <title>Sign Up Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	*:focus {
+		outline: none;
+	}
+	body {
+		font-family: Arial;
+		background-color: #3498DB;
+		padding: 50px;
+	}
+	.signup {
+		margin: 20px auto;
+		width: 300px;
+	}
+	.signup-screen {
+		background-color: #FFF;
+		padding: 20px;
+		border-radius: 5px
+	}
+	.app-title {
+		text-align: center;
+		color: #777;
+	}
+	.signup-form {
+		text-align: center;
+	}
+	.control-group {
+		margin-bottom: 10px;
+	}
+	.hint {
+		color: #f15c5c;
+		font: bold .8em Verdana, sans-serif;
+	}
+	input {
+		text-align: center;
+		background-color: #ECF0F1;
+		border: 2px solid transparent;
+		border-radius: 3px;
+		font-size: 16px;
+		font-weight: 200;
+		padding: 10px 0;
+		width: 250px;
+		transition: border .5s;
+	}
+	input:focus {
+		border: 2px solid #3498DB;
+		box-shadow: none;
+	}
+	</style>    
     
+    <script type="text/javascript">
+    	var result = 0;
+    	var request;
 
-<style>
-* {
-box-sizing: border-box;
-}
+	    window.addEventListener("load", function(){
 
-*:focus {
-	outline: none;
-}
-body {
-font-family: Arial;
-background-color: #3498DB;
-padding: 50px;
-}
-.signup {
-margin: 20px auto;
-width: 300px;
-}
-.signup-screen {
-background-color: #FFF;
-padding: 20px;
-border-radius: 5px
-}
+				function checkPass() {
+					var pass = $('#pass-name').val();
+					request = $.ajax({
+						url: 'http://194.29.146.156:9097/pijaginw/safeyourself/signup/validation',
+						mimeType: 'application/json; charset=UTF-8',
+						type: 'POST',
+						data: pass,
+						success: function(responseText, statusText, jqXHR) {
+							console.info(responseText['entropy']);
+							console.info(statusText);
+							result = responseText['entropy'];
+							console.info(result);
+							if (result > 2.2) {
+								$('#hint').text( '' );
+							} else {
+								$('#hint').text( 'password is too weak' );
+							}
+						},
+						error: function(jqXHR, statusText, errorThrown) {
+							//alert(jqXHR.responseText);
+						}
+					});
+				}
 
-.app-title {
-text-align: center;
-color: #777;
-}
+				elPassword = document.getElementById('pass-name');
+				elPassword.addEventListener('input', checkPass, false);
 
-.signup-form {
-text-align: center;
-}
-.control-group {
-margin-bottom: 10px;
-}
-
-input {
-text-align: center;
-background-color: #ECF0F1;
-border: 2px solid transparent;
-border-radius: 3px;
-font-size: 16px;
-font-weight: 200;
-padding: 10px 0;
-width: 250px;
-transition: border .5s;
-}
-
-input:focus {
-border: 2px solid #3498DB;
-box-shadow: none;
-}
-</style>    
-    
+		}, false);
+    </script>
     
   </head>
 
@@ -77,6 +112,7 @@ box-shadow: none;
 						<input type="text" class="signup-field" value="" placeholder="login" id="login-name" name="inputLogin">
 
 						<label class="signup-field-icon fui-user" for="signup-name">password:</label>
+						<p id="hint" class="hint"></p>
 						<input type="password" class="signup-field" value="" placeholder="password" id="pass-name" name="inputPass">
 
 						<label class="signup-field-icon fui-user" for="signup-name">repeat:</label>

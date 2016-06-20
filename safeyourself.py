@@ -3,6 +3,8 @@ from vial import Vial, render_template
 import sqlite3
 import cgi
 from passlib.hash import pbkdf2_sha256
+import math
+import json
 
 dbFile = '/home/pijaginw/safeyourself/safe-yourself/dbase.db'
 
@@ -30,7 +32,7 @@ def login(headers, body, data):
       session['user'] = login
       session['ip'] = headers['remote-addr']
       print session
-      
+
       if login not in notes:
         notes[login] = []
       return render_template('notes.html', body=body, data=data, notes=notes), 200, {}
@@ -87,6 +89,8 @@ def signup(headers, body, data):
       return 'error: repeated password is not correct!', 200, {}
     else:
       addToDatabase(login, password, dbFile)
+      print entropy(password)
+      
       return render_template('login.html', body=body, data=data), 200, {}
 
 
@@ -157,6 +161,43 @@ def logout(headers, body, data):
     session = {}
     return render_template('login.html', body=body, data=data), 200, {}
 
+
+def validation(headers, body, data):
+  request_method = headers['request-method']
+  if request_method == 'POST':
+    password = cgi.escape((body), quote=True)
+    print '++++++++++++++++++'
+    print type(password)
+    print password
+    print '++++++++++++++++++\n'
+    response = {'entropy': entropy(str(password))}
+  return json.dumps(response), 200, {'content-type': 'application/json'}
+
+
+
+
+def entropy(password):
+  res = 0
+  chars = {}
+  
+  for ch in password:
+    if ch not in chars:
+      chars[ch] = 1
+    else:
+      chars[ch] += 1
+
+  for i in chars:
+    l = float(len(password))
+    res += (chars[i]/l)*math.log(chars[i]/l, 2)
+
+  return -res
+
+
+
+
+
+
+
 routes = {
   '/': index,
   '/login': login,
@@ -164,6 +205,7 @@ routes = {
   '/notes': postNote,
   '/settings': changePass,
   '/logout': logout,
+  '/signup/validation': validation,
 }
 
 app = Vial(routes, prefix='/pijaginw/safeyourself', static='/static').wsgi_app()
