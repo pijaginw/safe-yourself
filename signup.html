@@ -67,7 +67,7 @@
 				function checkPass() {
 					var pass = $('#pass-name').val();
 					request = $.ajax({
-						url: 'http://194.29.146.156:9097/pijaginw/safeyourself/signup/validation',
+						url: 'https://194.29.146.156:6678/pijaginw/safeyourself/signup/validation',
 						mimeType: 'application/json; charset=UTF-8',
 						type: 'POST',
 						data: pass,
@@ -96,8 +96,6 @@
     
   </head>
 
-  <body>
-
     <body>
 	<div class="signup">
 		<div class="signup-screen">
@@ -106,7 +104,7 @@
 			</div>
 
 			<div class="signup-form">
-				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/signup' method='POST'>
+				<form action='https://194.29.146.156:6678/pijaginw/safeyourself/signup' method='POST'>
 					<div class="control-group">
 						<label class="signup-field-icon fui-user" for="signup-name">login:</label>
 						<input type="text" class="signup-field" value="" placeholder="login" id="login-name" name="inputLogin">
@@ -127,11 +125,5 @@
 			</div>
 		</div>
 	</div>
-</body>
-    
-    
-    
-    
-    
   </body>
 </html>

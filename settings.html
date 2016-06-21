@@ -66,7 +66,7 @@
 			function checkPass() {
 				var pass = $('#newPass').val();
 				request = $.ajax({
-					url: 'http://194.29.146.156:9097/pijaginw/safeyourself/signup/validation',
+					url: 'https://194.29.146.156:6678/pijaginw/safeyourself/signup/validation',
 					mimeType: 'application/json; charset=UTF-8',
 					type: 'POST',
 					data: pass,
@@ -92,48 +92,40 @@
 
 		}, false);
     </script>
-  </head>
+  	</head>
 
-  <body>
+	<body>
+		<div class="login">
+			<div class="login-screen">
+				<div class="app-title">
+					<h1>Change password:</h1>
+				</div>
 
-    <body>
-	<div class="login">
-		<div class="login-screen">
-			<div class="app-title">
-				<h1>Change password:</h1>
-			</div>
+				<div class="login-form">
+					<form action='https://194.29.146.156:6678/pijaginw/safeyourself/settings' method='POST'>
+						<p>change your password, {{ username }}</p>
 
-			<div class="login-form">
-				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/settings' method='POST'>
-					<p>change your password, {{ username }}</p>
+						<div class="control-group">
+						<label class="login-field-icon fui-user" for="oldPass">old password:</label>
+						<input type="password" class="login-field" value="" placeholder="old" id="oldPass" name="oldPass">
+						</div>
 
-					<div class="control-group">
-					<label class="login-field-icon fui-user" for="oldPass">old password:</label>
-					<input type="password" class="login-field" value="" placeholder="old" id="oldPass" name="oldPass">
-					</div>
+						<div class="control-group">
+						<label class="login-field-icon fui-lock" for="login-pass">new password:</label>
+						<p id="hint" class="hint"></p>
+						<input type="password" class="login-field" value="" placeholder="new" id="newPass" name="newPass">
+						</div>
 
-					<div class="control-group">
-					<label class="login-field-icon fui-lock" for="login-pass">new password:</label>
-					<p id="hint" class="hint"></p>
-					<input type="password" class="login-field" value="" placeholder="new" id="newPass" name="newPass">
-					</div>
+						<div class="control-group">
+						<label class="login-field-icon fui-lock" for="newPass2">repeat:</label>
+						<input type="password" class="login-field" value="" placeholder="new" id="newPass2" name="newPass2">
+						</div>
 
-					<div class="control-group">
-					<label class="login-field-icon fui-lock" for="newPass2">repeat:</label>
-					<input type="password" class="login-field" value="" placeholder="new" id="newPass2" name="newPass2">
-					</div>
-
-					<input type='submit' value='CHANGE' id='submitButton'/>
-				</form>
-				<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+						<input type='submit' value='CHANGE' id='submitButton'/>
+					</form>
+					<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
-    
-    
-    
-    
-    
-  </body>
+	</body>
 </html>

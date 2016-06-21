@@ -38,12 +38,13 @@
 		font-weight: bold;
 	}
 	.oldnote {
-		background-color: #ff7761;
+		background-color: #c6a49a;
 		padding: 10px;
 		width: 430px;
-		height: 80px;
+		height: auto;
 		border-radius: 15px;
 		margin: 20px auto;
+		word-wrap: break-word;
 	}
 	ul li {
 		list-style: none;
@@ -52,8 +53,6 @@
 	}
   </style>
 
-  <body>
-
     <body>
 	<div>
 		<div>
@@ -61,10 +60,10 @@
 				<h1>Notes</h1>
 			</div>
 
-			<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
-			<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/settings">---change password---</a></p>
+			<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
+			<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/settings">---change password---</a></p>
 			<div class="notes">
-				<form action='http://194.29.146.156:9097/pijaginw/safeyourself/notes' method='POST'>
+				<form action='https://194.29.146.156:6678/pijaginw/safeyourself/notes' method='POST'>
 					<p>Add a note:</p>
 					<div class="noteArea">
 						<textarea class="note" value="" id="noteTextarea" name="noteTextarea"></textarea>
@@ -90,11 +89,5 @@
 			</div>
 		</div>
 	</div>
-</body>
-    
-    
-    
-    
-    
   </body>
 </html>
