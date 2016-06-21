@@ -5,9 +5,11 @@ import cgi
 from passlib.hash import pbkdf2_sha256
 import math
 import json
+import time
 
 dbFile = '/home/pijaginw/safeyourself/safe-yourself/dbase.db'
 session = {}
+fails = {}
 
 def login(headers, body, data):
   request_method = headers['request-method']
@@ -23,7 +25,8 @@ def login(headers, body, data):
     password = cgi.escape(str(data['inputPass']), quote=True)
 
     if isUserInDatabase(login, dbFile) is False:
-      return 'there is no such a user!', 200, {}
+      msg = 'Invalid login.'
+      return render_template('error.html', body=body, data=data, msg=msg), 400, {}
 
     if isPasswordCorrect(login, password, dbFile) is True:
       global session
@@ -35,7 +38,20 @@ def login(headers, body, data):
       return render_template('notes.html', body=body, data=data, notes=notes), 200, {}
 
     elif isPasswordCorrect(login, password, dbFile) is False:
-      return render_template('error.html', body=body, data=data), 400, {}
+      global fails
+      if login in fails:
+        fails[login] += 1
+        if fails[login] > 3:
+          time.sleep(10)
+          fails[login] = 0
+          return render_template('login.html', body=body, data=data), 200, {}
+        else:
+          msg = 'Invalid password.'
+          return render_template('error.html', body=body, data=data, msg=msg), 400, {}
+      else:
+        fails[login] = 1
+        msg = 'Invalid password.'
+        return render_template('error.html', body=body, data=data, msg=msg), 400, {}
 
 def addToDatabase(login, password, dbfile):
   conn = sqlite3.connect(dbfile)
@@ -109,7 +125,7 @@ def postNote(headers, body, data):
         return render_template('notes.html', body=body, data=data, 
                                 notes=notes, username=session['user']), 200, {}
 
-      elif (request_method == 'POST' and ('user' in session)):
+      elif request_method == 'POST':
         try:
           if len(data) == 0:
             msg = 'You can\'t post an empty note.'
@@ -194,6 +210,8 @@ def changePass(headers, body, data):
         newpass2 = cgi.escape(str(data['newPass2']), quote=True)
 
         changePassword(session['user'], newpass, dbFile)
+        global session
+        session = {}
         return render_template('login.html', body=body, data=data), 200, {}
       else:
         msg = 'Invalid password.'
