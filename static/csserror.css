@@ -1,0 +1,33 @@
+* {
+	box-sizing: border-box;
+}
+*:focus {
+	outline: none;
+}
+body {
+	font-family: Verdana, sans-serif;
+	background-color: #d3e0f7;
+	padding: 50px;
+}
+.login {
+	margin: 20px auto;
+	width: 400px;
+}
+.login-screen {
+	background-color: #f4f4f4;
+	padding: 20px;
+	border-radius: 5px
+}
+.app-title {
+	text-align: center;
+	color: #444f59;
+}
+p {
+	text-align: center;
+}
+.message {
+	color: #a6172d;
+}
+.secret {
+	display: none;
+}

@@ -1,59 +1,10 @@
 <!DOCTYPE html>
 <html >
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"></meta>
     <title>Login Form</title>
-    
-
-	<style>
-	* {
-		box-sizing: border-box;
-	}
-	*:focus {
-		outline: none;
-	}
-	body {
-		font-family: Arial;
-		background-color: #3498DB;
-		padding: 50px;
-	}
-	.login {
-		margin: 20px auto;
-		width: 300px;
-	}
-	.login-screen {
-		background-color: #FFF;
-		padding: 20px;
-		border-radius: 5px
-	}
-	.app-title {
-		text-align: center;
-		color: #777;
-	}
-	.login-form {
-		text-align: center;
-	}
-	.control-group {
-		margin-bottom: 10px;
-	}
-	input {
-		text-align: center;
-		background-color: #ECF0F1;
-		border: 2px solid transparent;
-		border-radius: 3px;
-		font-size: 16px;
-		font-weight: 200;
-		padding: 10px 0;
-		width: 250px;
-		transition: border .5s;
-	}
-	input:focus {
-		border: 2px solid #3498DB;
-		box-shadow: none;
-	}
-	</style>    
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/csslogin.css">
   </head>
 
 	<body>
@@ -64,7 +15,7 @@
 				</div>
 
 				<div class="login-form">
-					<form action='https://194.29.146.156:6678/pijaginw/safeyourself/login' method='POST'>
+					<form action='/pijaginw/safeyourself/login' method='POST'>
 						<div class="control-group">
 						<input type="text" class="login-field" value="" placeholder="username" id="login-name" name="inputLogin">
 						<label class="login-field-icon fui-user" for="login-name"></label>
@@ -75,8 +26,10 @@
 						<label class="login-field-icon fui-lock" for="login-pass"></label>
 						</div>
 
-						<input type='submit' value='LOGIN' />
-						<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/signup">SIGN UP</a></p>
+						<input type='submit' value='LOGIN' id='submitButton'>
+						<p><a href="/pijaginw/safeyourself/signup">SIGN UP</a></p>
+
+						<input type='hidden' id="secretIn" name="secretIn" value="{{ token }}">
 					</form>
 				</div>
 			</div>

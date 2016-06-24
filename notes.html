@@ -1,93 +1,60 @@
 <!DOCTYPE html>
 <html >
-  <head>
-    <meta charset="UTF-8">
-    <title>Notes</title> 
-    
-  </head>
+	<head>
+		<meta charset="UTF-8"></meta>
+		<title>Notes</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/cssnotes.css">
+	</head>
 
-  <style type="text/css">
-  	body {
-		font-family: Arial;
-		background-color: #fff1b9;
-		padding: 50px;
-	}
-  	.note {
-  		width: 400px;
-		height: 100px;
-		border: 3px solid #cccccc;
-		margin: 20px;
-		font-family: Tahoma, sans-serif;
-  	}
-  	.noteArea {
-  		width: 450px;
-  		height: 150px;
-  		background-color: #a79c8e;
-		margin: 20px auto;
-		border-radius: 25px;
-  	}
-  	.notes {
-		margin: 20px auto;
-		width: 500px;
-	}
-	.title {
-		text-align: center;
-		color: #8F2D56;
-	}
-	.userName {
-		font-weight: bold;
-	}
-	.oldnote {
-		background-color: #c6a49a;
-		padding: 10px;
-		width: 430px;
-		height: auto;
-		border-radius: 15px;
-		margin: 20px auto;
-		word-wrap: break-word;
-	}
-	ul li {
-		list-style: none;
-		list-style-position: inside;
-		margin: 20px auto;
-	}
-  </style>
+	<!--<script type="text/javascript">
+		var result;
+		window.addEventListener("load", function() {
+			console.info(document.getElementById('secretIn').value);
+
+			b = document.getElementById("submitButton");
+			b.addEventListener("click", checkToken, false);
+		}, false);
+    </script>-->
 
     <body>
-	<div>
 		<div>
-			<div class="title">
-				<h1>Notes</h1>
-			</div>
+			<div>
+				<div class="title">
+					<h1>Notes</h1>
+				</div>
+				<div class="title">
+					<ul>
+						<li class="menu"><a href="/pijaginw/safeyourself/logout">logout</a></li>
+						<li class="menu"><a href="/pijaginw/safeyourself/settings">change password</a></li>
+					</ul>
+				</div>
 
-			<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/logout">{{ username }} is not you?</a></p>
-			<p><a href="https://194.29.146.156:6678/pijaginw/safeyourself/settings">---change password---</a></p>
-			<div class="notes">
-				<form action='https://194.29.146.156:6678/pijaginw/safeyourself/notes' method='POST'>
-					<p>Add a note:</p>
-					<div class="noteArea">
-						<textarea class="note" value="" id="noteTextarea" name="noteTextarea"></textarea>
-					</div>
-					<input type='submit' value='Add' />
+				<div class="notes">
+					<form action='/pijaginw/safeyourself/notes' method='POST'>
+						<p>Add a note:</p>
+						<div class="noteArea">
+							<textarea class="note" value="" id="noteTextarea" name="noteTextarea"></textarea>
+						</div>
+						<input type='hidden' id="secretIn" name="secretIn" value="{{ token }}">
+						<input type='submit' value='Add' id='submitButton'>
 
-					<p><a href="http://194.29.146.156:9097/pijaginw/safeyourself/logout">LOGOUT</a></p>
-					{% if notes %}
-						<ul>
-							{% for user in notes %}
-								{% for note in notes[user] %}
-									<div class="oldnote">
-										<li><p class="userName">{{ user }} writes...</p>{{ note }}</li>
-									</div>
+						{% if notes %}
+							<ul>
+								{% for user in notes %}
+									{% for note in notes[user] %}
+										<div class="oldnote">
+											<li><p class="userName">{{ user }} writes...</p>{{ note }}</li>
+										</div>
+									{% endfor %}
 								{% endfor %}
-							{% endfor %}
-						</ul>
-					{% else %}
-						<em>no notes has been added yet :(</em>
-					{% endif %}
-				</form>
-
+							</ul>
+						{% else %}
+							<em>no notes has been added yet :(</em>
+						{% endif %}
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-  </body>
+	</body>
 </html>

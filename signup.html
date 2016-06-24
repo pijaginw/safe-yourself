@@ -1,129 +1,57 @@
 <!DOCTYPE html>
 <html >
-  <head>
-    <meta charset="UTF-8">
-    <title>Sign Up Form</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-	<style>
-	* {
-		box-sizing: border-box;
-	}
-
-	*:focus {
-		outline: none;
-	}
-	body {
-		font-family: Arial;
-		background-color: #3498DB;
-		padding: 50px;
-	}
-	.signup {
-		margin: 20px auto;
-		width: 300px;
-	}
-	.signup-screen {
-		background-color: #FFF;
-		padding: 20px;
-		border-radius: 5px
-	}
-	.app-title {
-		text-align: center;
-		color: #777;
-	}
-	.signup-form {
-		text-align: center;
-	}
-	.control-group {
-		margin-bottom: 10px;
-	}
-	.hint {
-		color: #f15c5c;
-		font: bold .8em Verdana, sans-serif;
-	}
-	input {
-		text-align: center;
-		background-color: #ECF0F1;
-		border: 2px solid transparent;
-		border-radius: 3px;
-		font-size: 16px;
-		font-weight: 200;
-		padding: 10px 0;
-		width: 250px;
-		transition: border .5s;
-	}
-	input:focus {
-		border: 2px solid #3498DB;
-		box-shadow: none;
-	}
-	</style>    
+ 	<head>
+	    <meta charset="UTF-8"></meta>
+	    <title>Sign Up Form</title>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="/static/passvalidation.js" type="text/javascript"></script>
+	    <link rel="stylesheet" type="text/css" href="static/csssignup.css">
     
-    <script type="text/javascript">
-    	var result = 0;
-    	var request;
+	    <script type="text/javascript">
+	    	var result = 0;
+	    	var request;
 
-	    window.addEventListener("load", function(){
+		    window.addEventListener("load", function() {
+		    	var el = document.getElementById("pass-name");
+		    	el.addEventListener('input', function() {
+		    		checkPass("pass-name","submitButton");
+		    	}, false);
 
-				function checkPass() {
-					var pass = $('#pass-name').val();
-					request = $.ajax({
-						url: 'https://194.29.146.156:6678/pijaginw/safeyourself/signup/validation',
-						mimeType: 'application/json; charset=UTF-8',
-						type: 'POST',
-						data: pass,
-						success: function(responseText, statusText, jqXHR) {
-
-							result = responseText['entropy'];
-							if (result > 2.2) {
-								$('#hint').text( '' );
-								$('#submitButton').attr("disabled", false);
-							} else {
-								$('#hint').text( 'password is too weak!' );
-								$('#submitButton').attr("disabled", true);
-							}
-						},
-						error: function(jqXHR, statusText, errorThrown) {
-							//alert(jqXHR.responseText);
-						}
-					});
-				}
-
-				elPassword = document.getElementById('pass-name');
-				elPassword.addEventListener('input', checkPass, false);
-
-		}, false);
-    </script>
+				// console.info(document.getElementById('secretIn').value);
+		  		// b = document.getElementById("submitButton");
+				// b.addEventListener("click", checkToken, false);
+			}, false);
+	    </script>
     
   </head>
 
     <body>
-	<div class="signup">
-		<div class="signup-screen">
-			<div class="app-title">
-				<h1>Sign up</h1>
-			</div>
+		<div class="signup">
+			<div class="signup-screen">
+				<div class="app-title">
+					<h1>Sign up</h1>
+				</div>
 
-			<div class="signup-form">
-				<form action='https://194.29.146.156:6678/pijaginw/safeyourself/signup' method='POST'>
-					<div class="control-group">
-						<label class="signup-field-icon fui-user" for="signup-name">login:</label>
-						<input type="text" class="signup-field" value="" placeholder="login" id="login-name" name="inputLogin">
+				<div class="signup-form">
+					<form action='/pijaginw/safeyourself/signup' method='POST'>
+						<div class="control-group">
+							<label class="signup-field-icon fui-user" for="signup-name">login:</label>
+							<p class="tip">non alfanumerical characters will be ignored</p>
+							<input type="text" class="signup-field" value="" placeholder="login" id="login-name" name="inputLogin">
 
-						<label class="signup-field-icon fui-user" for="signup-name">password:</label>
-						<p id="hint" class="hint"></p>
-						<input type="password" class="signup-field" value="" placeholder="password" id="pass-name" name="inputPass">
+							<label class="signup-field-icon fui-user" for="signup-name">password:</label>
+							<p id="hint" class="hint"></p>
+							<input type="password" class="signup-field" value="" placeholder="password" id="pass-name" name="inputPass">
 
-						<label class="signup-field-icon fui-user" for="signup-name">repeat:</label>
-						<input type="password" class="signup-field" value="" placeholder="repeat" id="pass2-name" name="inputPass2">
-					
-					</div>
+							<label class="signup-field-icon fui-user" for="signup-name">repeat:</label>
+							<input type="password" class="signup-field" value="" placeholder="repeat" id="pass2-name" name="inputPass2">
+						</div>
 
-
-
-					<input type='submit' value='Create your account' id='submitButton'/>
-				</form>
+						<input type='submit' value='Create your account' id='submitButton'>
+						<input type='hidden' id="secretIn" name="secretIn" value="{{ token }}">
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-  </body>
+	</body>
 </html>
